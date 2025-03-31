@@ -1,40 +1,42 @@
+//* Redux
 import { configureStore } from "@reduxjs/toolkit";
 
+//* Reducers
 import taskReducer from "./tasksSlice";
 import filterReducer from "./filterSlice";
 
-const loadState = () => {
-  try {
-    const stateFromLS = localStorage.getItem("state");
-    if (stateFromLS === null) {
-      return undefined;
-    }
+//* Persist
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
-    return JSON.parse(stateFromLS);
-  } catch (err) {
-    alert("Something went wrong");
-  }
-};
-
-const saveState = (state) => {
-  try {
-    const stringifiedState = JSON.stringify(state);
-    localStorage.setItem("state", stringifiedState);
-  } catch {
-    alert("Something went wrong");
-  }
-};
-
-const stateFromLS = loadState();
+const persistedTasksReducer = persistReducer(
+  {
+    key: "tasks",
+    storage,
+  },
+  taskReducer
+);
 
 export const store = configureStore({
   reducer: {
-    tasks: taskReducer,
+    tasks: persistedTasksReducer,
     filter: filterReducer,
   },
-  preloadedState: stateFromLS,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
 
-store.subscribe(() => {
-  saveState(store.getState());
-});
+export const persistedStore = persistStore(store);

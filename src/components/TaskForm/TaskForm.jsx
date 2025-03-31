@@ -1,10 +1,13 @@
+//* Libraries
 import style from "./TaskForm.module.css";
-import Button from "../Button/Button";
-
 import { nanoid } from "nanoid";
 
+//* Components
+import Button from "../Button/Button";
+
+//* Redux
 import { useDispatch } from "react-redux";
-import { addTask } from "../../redux/tasksSlice";
+import { addTask } from "../../redux/operations";
 
 const TaskForm = () => {
   const dispatch = useDispatch();
@@ -18,13 +21,7 @@ const TaskForm = () => {
       return;
     }
 
-    dispatch(
-      addTask({
-        id: nanoid(),
-        completed: false,
-        text: form.elements.text.value,
-      })
-    );
+    dispatch(addTask(form.elements.text.value));
     form.reset();
   };
 

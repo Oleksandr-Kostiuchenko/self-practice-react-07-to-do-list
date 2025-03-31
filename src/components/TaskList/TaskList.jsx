@@ -1,6 +1,8 @@
+//* Components
 import style from "./TaskList.module.css";
 import Task from "../Task/Task";
 
+//* Redux
 import { useSelector } from "react-redux";
 
 const getVisibleTasks = (tasks, filterData) => {

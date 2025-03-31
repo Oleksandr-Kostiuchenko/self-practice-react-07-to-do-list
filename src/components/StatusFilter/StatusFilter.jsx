@@ -1,10 +1,10 @@
+//* Components
 import style from "./StatusFilter.module.css";
-import { useSelector } from "react-redux";
-
-import { useDispatch } from "react-redux";
-import { setStatusFilter } from "../../redux/filterSlice";
-
 import Button from "../Button/Button";
+
+//* Redux
+import { useSelector, useDispatch } from "react-redux";
+import { setStatusFilter } from "../../redux/filterSlice";
 
 const StatusFilter = () => {
   const dispatch = useDispatch();
