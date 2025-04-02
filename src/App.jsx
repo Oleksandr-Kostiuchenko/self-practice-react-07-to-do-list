@@ -10,10 +10,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTasks } from "./redux/operations";
 
+//* Redux selectors
+import { selectItems, selectError, selectIsLoading } from "./redux/tasksSlice";
+
 function App() {
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.tasks.isLoading);
-  const error = useSelector((state) => state.tasks.error);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
 
   useEffect(() => {
     dispatch(fetchTasks());

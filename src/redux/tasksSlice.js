@@ -1,5 +1,6 @@
 //* Redux & Actions
 import { createSlice } from "@reduxjs/toolkit";
+import { createSelector } from "@reduxjs/toolkit";
 import { fetchTasks } from "./operations";
 import { addTask } from "./operations";
 import { toggleCompleted } from "./operations";
@@ -13,6 +14,7 @@ const handleRejected = (state, action) => {
   state.error = action.payload;
 };
 
+//* Slice
 const slice = createSlice({
   name: "tasks",
   initialState: {
@@ -69,3 +71,42 @@ const slice = createSlice({
 });
 
 export default slice.reducer;
+
+//* Selectors
+import { selectFilter } from "./filterSlice";
+export const selectItems = (state) => state.tasks.items;
+export const selectIsLoading = (state) => state.tasks.isLoading;
+export const selectError = (state) => state.tasks.error;
+
+export const selectVisibleTasks = createSelector(
+  [selectItems, selectFilter],
+  (tasks, statusFilter) => {
+    switch (statusFilter) {
+      case "active":
+        return tasks.filter((task) => !task.completed);
+      case "completed":
+        return tasks.filter((task) => task.completed);
+      default:
+        return tasks;
+    }
+  }
+);
+
+export const selectCounter = createSelector([selectItems], (tasks) => {
+  const counter = tasks.reduce(
+    (acc, task) => {
+      if (task.completed) {
+        acc.completed += 1;
+      } else {
+        acc.active += 1;
+      }
+      return acc;
+    },
+    {
+      active: 0,
+      completed: 0,
+    }
+  );
+
+  return counter;
+});

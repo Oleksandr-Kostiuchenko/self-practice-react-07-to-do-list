@@ -6,9 +6,13 @@ import Button from "../Button/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { setStatusFilter } from "../../redux/filterSlice";
 
+//* Redux selectors
+import { selectFilter } from "../../redux/filterSlice";
+
 const StatusFilter = () => {
   const dispatch = useDispatch();
-  const filter = useSelector((state) => state.filter.status);
+
+  const filter = useSelector(selectFilter);
 
   const handleChangeFilter = (filter) => {
     dispatch(setStatusFilter(filter));

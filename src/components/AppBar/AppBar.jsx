@@ -1,5 +1,6 @@
 import style from "./AppBar.module.css";
 
+//* Components
 import TaskCounter from "../TaskCounter/TaskCounter";
 import StatusFilter from "../StatusFilter/StatusFilter";
 
