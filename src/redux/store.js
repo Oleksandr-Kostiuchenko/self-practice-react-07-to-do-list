@@ -6,37 +6,37 @@ import taskReducer from "./tasksSlice";
 import filterReducer from "./filterSlice";
 
 //* Persist
-import {
-  persistStore,
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from "redux-persist";
-import storage from "redux-persist/lib/storage";
+// import {
+//   persistStore,
+//   persistReducer,
+//   FLUSH,
+//   REHYDRATE,
+//   PAUSE,
+//   PERSIST,
+//   PURGE,
+//   REGISTER,
+// } from "redux-persist";
+// import storage from "redux-persist/lib/storage";
 
-const persistedTasksReducer = persistReducer(
-  {
-    key: "tasks",
-    storage,
-  },
-  taskReducer
-);
+// const persistedTasksReducer = persistReducer(
+//   {
+//     key: "tasks",
+//     storage,
+//   },
+//   taskReducer
+// );
 
 export const store = configureStore({
   reducer: {
-    tasks: persistedTasksReducer,
+    tasks: taskReducer,
     filter: filterReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
+  // middleware: (getDefaultMiddleware) =>
+  //   getDefaultMiddleware({
+  //     serializableCheck: {
+  //       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+  //     },
+  //   }),
 });
 
-export const persistedStore = persistStore(store);
+// export const persistedStore = persistStore(store);

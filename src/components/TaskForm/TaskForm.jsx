@@ -14,10 +14,11 @@ const TaskForm = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     const form = event.target;
 
     if (form.elements.text.value.trim() === "") {
-      alert("Please enter task");
+      alert("Please enter something!");
       return;
     }
 

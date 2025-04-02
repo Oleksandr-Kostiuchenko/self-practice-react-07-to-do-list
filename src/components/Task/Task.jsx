@@ -11,7 +11,7 @@ const Task = ({ task }) => {
   const dispatch = useDispatch();
 
   const handleDelete = () => {
-    dispatch(deleteTask(task.id));
+    dispatch(deleteTask(task));
   };
 
   const handleToggleCompleted = () => {
@@ -25,14 +25,14 @@ const Task = ({ task }) => {
   return (
     <div className={style.taskWrapper}>
       <input
-        onChange={handleToggleCompleted}
         type="checkbox"
+        onChange={handleToggleCompleted}
         checked={task.completed}
       />
       <p className={style.taskText}>
         {typeof task.text === "string" ? task.text : "Invalid task data"}
       </p>
-      <button onClick={handleDelete} className={style.deleteBtn}>
+      <button className={style.deleteBtn} onClick={handleDelete}>
         <RxCrossCircled className={style.deleteIcon} />
       </button>
     </div>

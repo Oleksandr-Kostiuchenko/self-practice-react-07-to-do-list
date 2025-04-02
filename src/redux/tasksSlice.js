@@ -2,15 +2,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchTasks } from "./operations";
 import { addTask } from "./operations";
-import { deleteTask } from "./operations";
 import { toggleCompleted } from "./operations";
+import { deleteTask } from "./operations";
 
 //* Handlers
 const handlePending = (state) => {
   state.isLoading = true;
 };
 const handleRejected = (state, action) => {
-  state.isLoading = false;
   state.error = action.payload;
 };
 
@@ -47,15 +46,6 @@ const slice = createSlice({
     });
     builder.addCase(addTask.rejected, handleRejected);
 
-    // Delete
-    builder.addCase(deleteTask.pending, handlePending);
-    builder.addCase(deleteTask.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.error = null;
-      state.items = state.items.filter((el) => el.id !== action.payload.id);
-    });
-    builder.addCase(deleteTask.rejected, handleRejected);
-
     // Toggle completed
     builder.addCase(toggleCompleted.pending, handlePending);
     builder.addCase(toggleCompleted.fulfilled, (state, action) => {
@@ -66,6 +56,15 @@ const slice = createSlice({
       );
     });
     builder.addCase(toggleCompleted.rejected, handleRejected);
+
+    // Delete
+    builder.addCase(deleteTask.pending, handlePending);
+    builder.addCase(deleteTask.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.error = null;
+      state.items = state.items.filter((el) => el.id !== action.payload.id);
+    });
+    builder.addCase(deleteTask.rejected, handleRejected);
   },
 });
 
